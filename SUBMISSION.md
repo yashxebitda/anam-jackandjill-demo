@@ -15,7 +15,7 @@ Jack & Jill is a high-signal prospect for Anam because **their product is alread
 The application is built using a modern, robust, and highly reliable stack:
 * **Next.js 14 (App Router) & Tailwind CSS:** Selected to support clean, responsive styling that mirrors Jack & Jill's warm, editorial brand aesthetics (cream backgrounds, elegant serif typography, terracotta accents).
 * **Secure Token Exchange:** The raw `ANAM_API_KEY` is strictly held on the server. The client requests a session token via `/api/anam-token`, which is dynamically generated and passed back. This keeps the integration production-ready and secure.
-* **Suggested Questions (Mic-Free Mode):** To guarantee a flawless experience under review conditions (where microphone permissions might be blocked or users might be reluctant to speak), the SDK is initialized with `disableInputAudio: true`. Instead, users interact with a set of pre-seeded, high-context suggested questions which programmatically send text payloads to the avatar via `clientRef.talk()`.
+* **Suggested Questions (Mic-Free Mode):** To guarantee a flawless experience under review conditions (where microphone permissions might be blocked or users might be reluctant to speak), the SDK is initialized with `disableInputAudio: false`. Instead, users interact with a set of pre-seeded, high-context suggested questions which programmatically send text payloads to the avatar via `clientRef.talk()`.
 * **Dynamic Content Layer (`lib/personas.ts`):** Centralizes both persona configurations, prompting instructions, and custom opening lines. This structure decouples the template code from the content layer, allowing extreme agility.
 
 ---
@@ -31,12 +31,24 @@ To scale this high-converting outbound motion, we structure the operational road
 * **Execution:** Automate the research and enrichment. We feed a company URL to an LLM script that extracts the key value props, brand colors, and team names using APIs like Clearbit/Apollo. The script outputs the structured TS persona config. Vercel CLI automates branch deployments automatically.
 * **Bottleneck:** Prompt testing and QA to prevent hallucinations.
 
-### Phase 3: 1,000+ Demos/Month (Fully Automated Engine)
-* **Execution:** Eliminate human QA from the critical path using synthetic evaluations. We spin up a critic LLM to run automated test conversations against newly generated avatars, validating character adherence, latency, and correctness. Successful runs are auto-deployed; outliers are flagged for manual review.
+### Phase 3: 1,000+ Demos/Month (Experimental Future Horizon)
+* **Operational Vision:** Positioned as an experimental R&D direction. This phase leverages a centralized context pipeline to assemble dynamic prompts on-the-fly, backed by a **Context Verification & Freshness Layer** to automatically validate that funding facts and customer references are up-to-date. Output QA shifts to automated synthetic evaluations using a critic LLM to run test dialogues before deployment.
 
 ---
 
-## 4. Key Learnings & Project Highlights
-* **Persona Calibration:** Swapping the Jill persona was critical. The original female persona encountered an Anam Lab server error, which was successfully resolved by generating a fresh, healthy persona ID (`83e1a041-4003-43b6-85a5-7b68f91fc75a`).
-* **Concurrency Awareness:** Anam's session limits require the user to close active sessions before switching between Jack and Jill to prevent connection drops.
-* **SDK Flexibility:** Leveraging the newer SDK events (`CONNECTION_ESTABLISHED` and `CONNECTION_CLOSED`) allowed us to implement seamless connection states and elegant fallback error messages.
+## 4. Key Learnings & Production Considerations
+
+### A. Session Orchestration & Concurrency Lag
+* **Observation:** WebRTC teardown can be asynchronous. If a user quickly switches routes from Jack to Jill, a brief concurrency lock can occur on shared API slots.
+* **Production Resolution:** In a full-scale deployment, we would decouple session state from basic client route navigation by introducing a **Global Session Manager** (or routing via distinct per-user session IDs) to force immediate WebRTC connection termination and clean handshakes.
+
+### B. Dynamic Context Assembler vs. Prompt Decay
+* **Observation:** Hardcoded company intelligence (funding, team size, pricing) ages rapidly and introduces hallucination risks if scaled statically.
+* **Production Resolution:** Implement a real-time data enrichment pipeline that queries company profiles on demand, passes the JSON through a strict Zod schema validator, and injects fresh, validated tokens into the prompt template dynamically.
+
+### C. Adversarial Robustness & Safety Guardrails
+* **Observation:** Outbound public-facing demos are highly vulnerable to prompt injections, system extraction, and adversarial inputs.
+* **Production Resolution:** Before moving beyond prototype stage, we would layer output filtering firewalls (such as LlamaGuard or string-matching keyword lists) to prevent jailbreaks and ensure strict brand compliance.
+
+### D. Jill Persona Calibration
+* **Resolution:** Swapping the Jill persona was critical. The original female persona encountered an Anam Lab server error, which was successfully resolved by generating a fresh, healthy persona ID (`83e1a041-4003-43b6-85a5-7b68f91fc75a`).
