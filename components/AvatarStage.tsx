@@ -47,7 +47,7 @@ export default function AvatarStage({
       const { createClient, AnamEvent } = await import("@anam-ai/js-sdk");
 
       const anamClient = createClient(sessionToken, {
-        disableInputAudio: true,
+        disableInputAudio: false,
       });
       clientRef.current = anamClient;
 
@@ -142,7 +142,7 @@ export default function AvatarStage({
               Meet {displayName}
             </button>
             <p className="text-smoke text-xs mt-4">
-              This demo starts mic-free. Use the suggested questions once it is live.
+              Speak out loud once live, or use the suggested questions below.
             </p>
           </div>
         )}
