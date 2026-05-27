@@ -26,9 +26,12 @@ export default function LandingPage() {
 
       {/* Persona picker */}
       <section className="pb-24 sm:pb-32">
-        <p className="text-smoke text-xs uppercase tracking-widest mb-6">
-          Choose who to meet
+        <p className="text-smoke text-xs uppercase tracking-widest mb-3">
+          An Anam sales avatar, built for you
         </p>
+        <h2 className="font-display text-2xl sm:text-3xl text-ink mb-6 max-w-3xl leading-snug tracking-tightest">
+          Pick a version of Jack or Jill to talk to. They'll show you what your agents would feel like with a face, and walk you through how Anam ships it.
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <Link
             href="/jack"
