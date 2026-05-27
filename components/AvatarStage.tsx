@@ -87,6 +87,19 @@ export default function AvatarStage({
     }
   }, [personaId]);
 
+  // Stop active session manually
+  const stopSessionManual = useCallback(async () => {
+    if (clientRef.current?.stopStreaming) {
+      try {
+        await clientRef.current.stopStreaming();
+      } catch (err) {
+        console.warn("Failed to stop streaming:", err);
+      }
+    }
+    setStatus("idle");
+    hasGreetedRef.current = false;
+  }, []);
+
   // Send a typed question to the avatar (fallback for users who don't want to speak)
   const sendMessage = useCallback(async (text: string) => {
     if (!clientRef.current || status !== "live") return;
@@ -183,6 +196,16 @@ export default function AvatarStage({
               {displayName} is live
             </span>
           </div>
+        )}
+
+        {/* End Session button (only when live) */}
+        {status === "live" && (
+          <button
+            onClick={stopSessionManual}
+            className="absolute top-4 right-4 bg-terracotta text-cream text-xs uppercase tracking-widest px-3.5 py-1.5 rounded-full hover:bg-ink hover:text-cream transition-all duration-200 font-display font-semibold z-10"
+          >
+            End Session
+          </button>
         )}
       </div>
 
