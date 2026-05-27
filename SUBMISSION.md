@@ -16,6 +16,7 @@ The application is built using a modern, robust, and highly reliable stack:
 * **Next.js 14 (App Router) & Tailwind CSS:** Selected to support clean, responsive styling that mirrors Jack & Jill's warm, editorial brand aesthetics (cream backgrounds, elegant serif typography, terracotta accents).
 * **Secure Token Exchange:** The raw `ANAM_API_KEY` is strictly held on the server. The client requests a session token via `/api/anam-token`, which is dynamically generated and passed back. This keeps the integration production-ready and secure.
 * **Dual-Mode Interactive UI:** The SDK is initialized with microphone input active (`disableInputAudio: false`) to support natural, real-time voice-to-voice interaction. To guarantee a bulletproof experience if a user denies microphone permissions (or tests in a noisy room), the interface displays a dedicated set of pre-seeded, high-context suggested question buttons. Tapping a question sends a programmatic text payload directly to the avatar via `clientRef.talk()`.
+* **Consultative Sales Engine:** The avatar is prompted not merely as a passive responder, but as a consultative sales agent. It is explicitly directed to guide the user through a discovery conversation, ask about their specific role (e.g., founder, engineer, hiring manager) and key conversion challenges (e.g., candidate drop-off, onboarding friction), and seamlessly map their pain points directly to Anam's core benefits (such as +57% engagement, +44% retention, and +23% conversion lifts).
 
 ---
 
