@@ -16,12 +16,11 @@ export default function LandingPage() {
       {/* Hero */}
       <section className="pt-16 sm:pt-28 pb-12 sm:pb-20">
         <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl text-ink leading-[0.95] tracking-tightest max-w-5xl">
-          You named them Jack and Jill.<br />
-          You gave them voices,<br />
-          and <span className="italic text-terracotta">SVG faces</span>.
+          You gave Jack and Jill voices.<br />
+          We gave them <span className="italic text-terracotta">faces</span>.
         </h1>
         <p className="font-display text-2xl sm:text-3xl text-smoke mt-10 max-w-2xl leading-snug">
-          Here&apos;s what they look like with real ones.
+          An interactive preview of your AI agents, now powered by real-time avatars.
         </p>
       </section>
 

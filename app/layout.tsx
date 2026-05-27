@@ -12,7 +12,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "What if Jack had a face? A custom Anam demo for Jack & Jill",
   description:
-    "You named them Jack and Jill. You gave them voices, and SVG faces. Here's what they look like with real ones.",
+    "You gave Jack and Jill voices. We gave them faces. An interactive preview of your AI agents, now powered by real-time avatars.",
   openGraph: {
     title: "What if Jack had a face?",
     description:
